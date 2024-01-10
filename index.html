@@ -1,0 +1,55 @@
+<html>
+
+<head>
+	<title>IUH GDSC - Custom Page</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link href='fvc.ico' type='image/x-icon' rel='icon' />
+	<link href='fvc.ico' type='image/x-icon' rel='shortcut icon' />
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+		rel="stylesheet">
+
+	<noscript>
+		<meta http-equiv="refresh" content="0; URL=/nojs.html">
+	</noscript>
+
+	<head>
+
+		<script>
+			const getParameterByName = (name, url = window.location.href) => {
+				name = name.replace(/[\[\]]/g, '\\$&');
+				var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+					results = regex.exec(url);
+				if (!results) return null;
+				if (!results[2]) return '';
+				return decodeURIComponent(results[2].replace(/\+/g, ' '));
+			}
+			var linkCustom = (getParameterByName("l")) ? getParameterByName("l").replaceAll(/[^\d\w]/g).toLowerCase() : "";
+
+
+
+			(async () => {
+				try {
+					
+					const response = await fetch("/DataBin/customLinks/" + linkCustom + ".json");
+					const data = await response.json();
+					if (data.url)
+						window.location.href = data.url;
+					else {
+						alert("Lỗi: Custom link không tồn tại!");
+					}
+				} catch (e){
+					alert("Lỗi: Custom link không tồn tại!");
+				}
+				
+			})();
+
+			window.onload = () => {
+
+			}
+		</script>
+
+	<body>
+		<h1> Notice: Waiting if you come from custom link...!</h1>
+	</body>
+	<html>
