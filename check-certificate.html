@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <!-- Give me a nav with logo on left side, home, contact, join us button on right side -->
+    <nav class="flex justify-between items-center md:px-28 px-5 py-4">
+        <div class="flex items-center">
+            <!-- <img src="https://via.placeholder.com/150" alt="logo" class="w-16 h-16"> -->
+            <h1 class="text-2xl font-bold ml-4">IUH GDSC</h1>
+        </div>
+        <div class="flex items-center">
+            <a href="#" class="mr-4">Home</a>
+            <a href="#" class="mr-4">Contact</a>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Join us
+            </button>
+        </div>
+    </nav>
+
+    <!-- Give me a hero section with background image, title, subtitle and a button -->
+    <section class="bg-cover bg-center bg-blue-500 text-white md:px-32 px-5 py-12">
+        <h1 class="text-4xl font-bold mb-2">Welcome to GDSC IUH</h1>
+        <p class="text-lg mb-4">We are here to help you learn and grow</p>
+        <p class="text-lg mb-4">Please note: This system is under development!</p>
+        <button class="bg-white text-blue-500 font-bold py-2 px-4 rounded">Learn more</button>
+    </section>
+
+    <section name="sec-certificate" class="bg-cover bg-center bg-gray-50 py-12 md:px-32 px-5 flex flex-row flex-wrap gap-4">
+
+        <div class="lg:w-1/2 w-full border border-solid border-blue-500">
+            <h1 class="text-2xl font-bold mb-2 bg-blue-500 text-white px-2">Certificate</h1>
+            <div class="px-4 py-3">
+                <p class="text-lg mb-4">Please enter certificate code to verify:</p>
+                <input id="txt-certid" type="text" class="border border-gray-300 p-2 rounded w-full mb-4">
+                <button id="btn-check"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-32">Check</button>
+
+                <!-- Create a line with blue -->
+                <hr class="my-4 border border-blue-300">
+                <p id="lbl-alert" class="my-3"></p>
+            </div>
+        </div>
+    </section>
+
+</body>
+
+<!-- script1 -->
+<script>
+    const API_URL = "certificates/";
+    document.getElementById("btn-check").addEventListener("click", () => {
+        const code = document.getElementById("txt-certid").value;
+        const alert = document.getElementById("lbl-alert");
+
+
+        fetch(API_URL + code + ".json")
+            .then(response => response.json())
+            .then(data => {
+                if (data.fullName) {
+                    const span = document.createElement("span");
+                    span.style.color = "green";
+                    span.style.fontWeight = "bold";
+                    span.innerText = `Certificate found for ${data.fullName}`;
+
+                    const span2 = document.createElement("span");
+                    span2.innerText = `Served as ${data.roleClass} in class ${data.class}\nIssued on ${data.issuedDate}\nBy ${data.issuer} (${data.issuerRole} - ${data.class})`;
+
+                    span2.classList.add("mb-2");
+                    alert.appendChild(span);
+                    alert.appendChild(document.createElement("br"));
+                    alert.appendChild(span2);
+                    
+                } else {
+                    alert.innerText = "Certificate not found";
+                    alert.style.color = "red";
+                }
+            })
+            .catch(() => {
+                alert.innerText = "Certificate not found";
+                alert.style.color = "red";
+            }
+            );
+    });
+
+</script>
+
+</html>
