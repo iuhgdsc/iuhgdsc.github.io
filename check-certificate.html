@@ -58,7 +58,7 @@
         const alert = document.getElementById("lbl-alert");
 
 
-        fetch(API_URL + code + ".json")
+        fetch(API_URL + code.toLowerCase() + ".json")
             .then(response => response.json())
             .then(data => {
                 if (data.fullName) {
