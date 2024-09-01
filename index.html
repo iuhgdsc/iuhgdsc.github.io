@@ -24,7 +24,8 @@
 				if (!results[2]) return '';
 				return decodeURIComponent(results[2].replace(/\+/g, ' '));
 			}
-			var linkCustom = (getParameterByName("l")) ? getParameterByName("l").replaceAll(/[^\d\w]/g).toLowerCase() : "";
+			var linkCustom = (getParameterByName("l")) ? getParameterByName("l").replaceAll(/[^\d\w]/g).toLowerCase() : 
+			(getParameterByName("L") ?  getParameterByName("L").replaceAll(/[^\d\w]/g).toLowerCase() : "") ;
 
 
 
